@@ -98,7 +98,7 @@
 
     .controls {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
       gap: 10px;
       margin: 18px 0;
     }
@@ -164,6 +164,11 @@
       gap: 16px;
     }
 
+    #faq.panel {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
     @keyframes rise {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
@@ -187,6 +192,31 @@
       display: grid;
       gap: 10px;
       margin-top: 18px;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .faq-item {
+      padding: 16px 18px;
+      border-left: 5px solid var(--green);
+      background: var(--cream);
+    }
+
+    .faq-item h3 {
+      margin: 0 0 8px;
+      color: var(--ink);
+      font-size: 18px;
+      line-height: 1.2;
+    }
+
+    .faq-item p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.42;
     }
 
     .fact {
@@ -216,6 +246,16 @@
       font-size: 0.94em;
       line-height: 1.38;
       font-weight: 600;
+    }
+
+    .disclaimer {
+      align-self: end;
+      margin: 20px 0 0;
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.38;
     }
 
     .steps {
@@ -476,6 +516,7 @@
       <button class="tab" type="button" aria-selected="true" data-target="benefits">1. Benefits<span>Member tiers, points, vouchers, rewards</span></button>
       <button class="tab" type="button" aria-selected="false" data-target="method">2. Method<span>Create account, fill in, sign up</span></button>
       <button class="tab" type="button" aria-selected="false" data-target="use">3. How to use<span>Dine in, delivery, reservation, QR order</span></button>
+      <button class="tab" type="button" aria-selected="false" data-target="faq">4. FAQ<span>Points, discounts, app support</span></button>
     </nav>
 
     <section class="stage" aria-live="polite">
@@ -489,6 +530,7 @@
             <div class="fact"><strong>Benefits of Registering</strong><p>Earn points with purchases.<span class="zh">消费即可赚取积分。</span></p><p>Daily check-in.<span class="zh">每日签到。</span></p></div>
             <div class="fact"><strong>Future Benefits</strong><p>Redeem rewards.<span class="zh">兑换奖励。</span></p><p>Mission.<span class="zh">任务奖励。</span></p><p>Digital vouchers.<span class="zh">电子优惠券。</span></p></div>
           </div>
+          <p class="disclaimer">We reserve the right to change the app content and offerings without prior notice.<span class="zh">我们保留在不另行通知的情况下更改 App 内容与优惠的权利。</span></p>
         </div>
 
         <div class="image-board feature-image current-benefits">
@@ -502,6 +544,7 @@
           <p class="kicker">Page 2</p>
           <h2>Method: register through the app</h2>
           <p class="lead">Follow the three-step flow below to become a Yin's member in the app.<span class="zh">按照以下三个步骤，即可在 App 中注册成为 Yin's 会员。</span></p>
+          <p class="disclaimer">We reserve the right to change the app content and offerings without prior notice.<span class="zh">我们保留在不另行通知的情况下更改 App 内容与优惠的权利。</span></p>
         </div>
 
         <div class="workflow" aria-label="Registration workflow">
@@ -535,6 +578,7 @@
             <div class="fact"><strong>Reservation</strong><p>Select store, guest count, booking date and time, and add remarks if needed.<span class="zh">选择门店、人数、预约日期和时间，如有需要可填写备注。</span></p></div>
             <div class="fact"><strong>Table QR</strong><p>Scan the table QR to link the order to the restaurant location and table number.<span class="zh">扫描桌号二维码，即可将订单连接到对应的餐厅地点和桌号。</span></p></div>
           </div>
+          <p class="disclaimer">We reserve the right to change the app content and offerings without prior notice.<span class="zh">我们保留在不另行通知的情况下更改 App 内容与优惠的权利。</span></p>
         </div>
 
         <div class="image-board">
@@ -544,9 +588,41 @@
         </div>
       </article>
 
+      <article class="panel" id="faq">
+        <div>
+          <p class="kicker">Page 4</p>
+          <h2>Frequently asked questions</h2>
+          <p class="lead">Quick answers for existing members, discounts, app issues, and the difference between redeemable points and tier progress.<span class="zh">以下是旧会员、折扣、App 问题，以及可兑换积分与会员等级积分差异的常见问题说明。</span></p>
+
+          <div class="faq-list">
+            <section class="faq-item">
+              <h3>How do old members retrieve their points?</h3>
+              <p>Old members from the previous Yin's app or FeedMe membership system should register with their previously registered email and phone number to support a smooth points transition.<span class="zh">旧 Yin's App 或 FeedMe 会员系统的旧会员，请使用之前注册的电邮和电话号码重新注册，以便积分顺利转移。</span></p>
+            </section>
+
+            <section class="faq-item">
+              <h3>Can members still use corporate or resident discounts?</h3>
+              <p>No. Customers may use either in-store discounts or app member benefits, but not both at the same time.<span class="zh">不可以。顾客只能选择店内折扣或 App 会员福利其中一种，不能同时享有两项优惠。</span></p>
+            </section>
+
+            <section class="faq-item">
+              <h3>Who should customers contact for app issues?</h3>
+              <p>For missing points, ordering issues, payment issues, or other app-related problems, contact HQ directly: Yin's Sourdough Bakery Georgetown, 01124195118.<span class="zh">如遇到积分遗漏、下单问题、付款问题或其他 App 相关问题，请直接联系总部：Yin's Sourdough Bakery Georgetown，01124195118。</span></p>
+            </section>
+
+            <section class="faq-item">
+              <h3>What is the difference between Points and Accumulated Points?</h3>
+              <p>Points are the redeemable balance customers can spend on vouchers or rewards. They include points from purchases, daily check-ins, and rewards. Accumulated Points are used for membership tier progress and count only points earned from actual purchases.<span class="zh">Points 是可兑换余额，可用于兑换优惠券或奖励，来源包括消费、每日签到和奖励。Accumulated Points 则用于会员等级进度，只计算实际消费所获得的积分。</span></p>
+            </section>
+          </div>
+
+          <p class="disclaimer">We reserve the right to change the app content and offerings without prior notice.<span class="zh">我们保留在不另行通知的情况下更改 App 内容与优惠的权利。</span></p>
+        </div>
+      </article>
+
       <div class="pager">
         <button class="nav-button" type="button" id="prev">Previous</button>
-        <span class="count" id="count">Page 1 of 3</span>
+        <span class="count" id="count">Page 1 of 4</span>
         <button class="nav-button" type="button" id="next">Next</button>
       </div>
     </section>
