@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yin's StoreApp Membership Guide</title>
+  <style>
+    :root {
+      --cream: #f7f2e5;
+      --cream-2: #fbf8ef;
+      --green: #315b2f;
+      --green-dark: #203f21;
+      --gold: #b9a26d;
+      --ink: #26251f;
+      --muted: #6d6a5f;
+      --line: #ddd4bd;
+      --white: #fffdf7;
+      --shadow: 0 24px 60px rgb(49 91 47 / 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgb(49 91 47 / 0.08) 1px, transparent 1px),
+        linear-gradient(180deg, var(--cream), var(--cream-2));
+      background-size: 48px 48px, auto;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 34px;
+    }
+
+    .masthead {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 22px 20px;
+      border: 1px solid var(--line);
+      border-left: 8px solid var(--green);
+      background: rgb(255 253 247 / 0.92);
+      box-shadow: var(--shadow);
+    }
+
+    .logo-frame {
+      display: grid;
+      place-items: center;
+      min-height: 112px;
+      border: 1px solid var(--line);
+      background: var(--cream-2);
+      overflow: hidden;
+    }
+
+    .logo-frame img {
+      width: 100%;
+      height: 112px;
+      object-fit: contain;
+      object-position: center;
+      mix-blend-mode: multiply;
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 900px;
+      font-size: clamp(34px, 6vw, 72px);
+      line-height: 0.95;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 720px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.35;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 18px 0;
+    }
+
+    .tab {
+      min-height: 54px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      color: var(--green-dark);
+      cursor: pointer;
+      font-weight: 800;
+      text-align: left;
+      padding: 12px 14px;
+      transition: transform 160ms ease, background 160ms ease, color 160ms ease;
+    }
+
+    .tab span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .tab:hover {
+      transform: translateY(-1px);
+      border-color: var(--gold);
+    }
+
+    .tab[aria-selected="true"] {
+      background: var(--green);
+      color: var(--white);
+      border-color: var(--green);
+    }
+
+    .tab[aria-selected="true"] span {
+      color: rgb(255 253 247 / 0.78);
+    }
+
+    .stage {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgb(255 253 247 / 0.94);
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      display: none;
+      grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr);
+      gap: 26px;
+      min-height: 560px;
+      padding: 28px;
+    }
+
+    .panel.is-active {
+      display: grid;
+      animation: rise 260ms ease both;
+    }
+
+    #method.panel {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      color: var(--green-dark);
+      font-size: clamp(28px, 4vw, 48px);
+      line-height: 1;
+    }
+
+    .lead {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.38;
+    }
+
+    .facts {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .fact {
+      padding: 13px 14px;
+      border-left: 5px solid var(--green);
+      background: var(--cream);
+    }
+
+    .fact strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .fact p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.35;
+      font-size: 14px;
+    }
+
+    .zh {
+      display: block;
+      margin-top: 3px;
+      color: var(--green-dark);
+      font-size: 0.94em;
+      line-height: 1.38;
+      font-weight: 600;
+    }
+
+    .steps {
+      counter-reset: step;
+      display: grid;
+      gap: 12px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .steps li {
+      counter-increment: step;
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 12px;
+      background: var(--cream);
+      color: var(--muted);
+      line-height: 1.34;
+    }
+
+    .steps li::before {
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 900;
+    }
+
+    .steps b {
+      color: var(--ink);
+    }
+
+    .workflow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 24px;
+    }
+
+    .flow-card {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-height: 470px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgb(49 91 47 / 0.1);
+    }
+
+    .flow-card::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      right: -23px;
+      width: 42px;
+      height: 2px;
+      background: var(--gold);
+    }
+
+    .flow-card:last-child::after {
+      display: none;
+    }
+
+    .flow-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--green-dark);
+      font-weight: 900;
+    }
+
+    .flow-title span {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      background: var(--green);
+      color: var(--white);
+    }
+
+    .flow-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 320px;
+      object-fit: contain;
+      object-position: center;
+      display: block;
+      background: var(--cream-2);
+    }
+
+    .flow-copy {
+      margin: 0;
+      padding: 11px 14px;
+      color: var(--muted);
+      line-height: 1.35;
+      font-size: 14px;
+      border-top: 1px solid var(--line);
+      background: var(--cream);
+    }
+
+    .image-board {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .image-board.feature-image {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .image-board.current-benefits .shot {
+      height: 490px;
+    }
+
+    .shot {
+      position: relative;
+      overflow: hidden;
+      height: 238px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .shot.tall {
+      grid-row: span 2;
+      height: 490px;
+    }
+
+    .shot img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      object-position: center top;
+    }
+
+    .shot figcaption {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      padding: 7px 9px;
+      background: rgb(255 253 247 / 0.9);
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 800;
+      border: 1px solid var(--line);
+    }
+
+    .pager {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-top: 1px solid var(--line);
+      background: var(--cream);
+    }
+
+    .nav-button {
+      min-width: 118px;
+      min-height: 42px;
+      border: 0;
+      background: var(--green);
+      color: var(--white);
+      cursor: pointer;
+      font-weight: 800;
+      transition: transform 140ms ease, background 140ms ease;
+    }
+
+    .nav-button:hover {
+      background: var(--green-dark);
+    }
+
+    .nav-button:active {
+      transform: translateY(1px);
+    }
+
+    .count {
+      color: var(--green-dark);
+      font-weight: 800;
+    }
+
+    footer {
+      color: var(--muted);
+      margin-top: 14px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 860px) {
+      .masthead,
+      .panel,
+      #method.panel {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        grid-template-columns: 1fr;
+      }
+
+      .panel {
+        min-height: auto;
+        padding: 18px;
+      }
+
+      .image-board {
+        grid-template-columns: 1fr;
+      }
+
+      .image-board.feature-image,
+      .workflow {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-card::after {
+        display: none;
+      }
+
+      .shot,
+      .shot.tall {
+        height: 320px;
+        grid-row: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .panel.is-active {
+        animation: none;
+      }
+
+      .tab,
+      .nav-button {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="masthead">
+      <div class="logo-frame" aria-label="Yin's handbook cover image">
+        <img src="assets/cover-logo.jpg" alt="Yin's StoreApp handbook cover logo from the PDF">
+      </div>
+    </header>
+
+    <nav class="controls" aria-label="Poster pages">
+      <button class="tab" type="button" aria-selected="true" data-target="benefits">1. Benefits<span>Member tiers, points, vouchers, rewards</span></button>
+      <button class="tab" type="button" aria-selected="false" data-target="method">2. Method<span>Create account, fill in, sign up</span></button>
+      <button class="tab" type="button" aria-selected="false" data-target="use">3. How to use<span>Dine in, delivery, reservation, QR order</span></button>
+    </nav>
+
+    <section class="stage" aria-live="polite">
+      <article class="panel is-active" id="benefits">
+        <div>
+          <p class="kicker">Page 1</p>
+          <h2>Benefits of registering as a Yin's member</h2>
+          <p class="lead">Registering as a Yin's member gives customers active points benefits now, with more rewards features planned for later.<span class="zh">注册成为 Yin's 会员后，顾客目前可享有积分相关福利，未来也将陆续推出更多奖励功能。</span></p>
+
+          <div class="facts">
+            <div class="fact"><strong>Benefits of Registering</strong><p>Earn points with purchases.<span class="zh">消费即可赚取积分。</span></p><p>Daily check-in.<span class="zh">每日签到。</span></p></div>
+            <div class="fact"><strong>Future Benefits</strong><p>Redeem rewards.<span class="zh">兑换奖励。</span></p><p>Mission.<span class="zh">任务奖励。</span></p><p>Digital vouchers.<span class="zh">电子优惠券。</span></p></div>
+          </div>
+        </div>
+
+        <div class="image-board feature-image current-benefits">
+          <figure class="shot"><img src="assets/current-points.png" alt="Member benefits points screen"><figcaption>Earn Points With Purchases</figcaption></figure>
+          <figure class="shot"><img src="assets/daily-check-in.png" alt="Daily check-in rewards screen"><figcaption>Daily Check-in</figcaption></figure>
+        </div>
+      </article>
+
+      <article class="panel" id="method">
+        <div class="method-copy">
+          <p class="kicker">Page 2</p>
+          <h2>Method: register through the app</h2>
+          <p class="lead">Follow the three-step flow below to become a Yin's member in the app.<span class="zh">按照以下三个步骤，即可在 App 中注册成为 Yin's 会员。</span></p>
+        </div>
+
+        <div class="workflow" aria-label="Registration workflow">
+          <figure class="flow-card">
+            <figcaption class="flow-title"><span>1</span>Create Account</figcaption>
+            <img src="assets/method-start.png" alt="Opening screen with Create Account button">
+            <p class="flow-copy">Start from the opening screen and tap Create Account.<span class="zh">从首页开始，点击 Create Account（创建账号）。</span></p>
+          </figure>
+          <figure class="flow-card">
+            <figcaption class="flow-title"><span>2</span>Fill In</figcaption>
+            <img src="assets/method-form.png" alt="Create account form screen">
+            <p class="flow-copy">Enter your name, email, contact number, and password.<span class="zh">填写姓名、电邮、联络号码和密码。</span></p>
+          </figure>
+          <figure class="flow-card">
+            <figcaption class="flow-title"><span>3</span>Sign Up</figcaption>
+            <img src="assets/method-form.png" alt="Create account form with Sign Up button">
+            <p class="flow-copy">Tap Sign Up to complete registration.<span class="zh">点击 Sign Up（注册）完成会员注册。</span></p>
+          </figure>
+        </div>
+      </article>
+
+      <article class="panel" id="use">
+        <div>
+          <p class="kicker">Page 3</p>
+          <h2>How to use the app</h2>
+          <p class="lead">From the home screen, users choose Dine in, Reservation, Pick Up, or Delivery.<span class="zh">用户可在主页选择堂食、预约、到店自取或外送服务。</span></p>
+
+          <div class="facts">
+            <div class="fact"><strong>Dine in</strong><p>Select a store, browse the menu, add items, then choose table number and payment method.<span class="zh">选择门店，浏览菜单并加入商品，然后选择桌号和付款方式。</span></p></div>
+            <div class="fact"><strong>Delivery</strong><p>Enter delivery location, confirm items, choose delivery time, and complete address details.<span class="zh">输入外送地点，确认商品，选择送达时间，并填写完整地址。</span></p></div>
+            <div class="fact"><strong>Reservation</strong><p>Select store, guest count, booking date and time, and add remarks if needed.<span class="zh">选择门店、人数、预约日期和时间，如有需要可填写备注。</span></p></div>
+            <div class="fact"><strong>Table QR</strong><p>Scan the table QR to link the order to the restaurant location and table number.<span class="zh">扫描桌号二维码，即可将订单连接到对应的餐厅地点和桌号。</span></p></div>
+          </div>
+        </div>
+
+        <div class="image-board">
+          <figure class="shot tall"><img src="assets/home-screen-crop.jpg" alt="Home app screen"><figcaption>Home Page</figcaption></figure>
+          <figure class="shot"><img src="assets/menu-screen-crop.jpg" alt="Menu app screen"><figcaption>Menu</figcaption></figure>
+          <figure class="shot"><img src="assets/checkout-crop.jpg" alt="Checkout app screen"><figcaption>Checkout</figcaption></figure>
+        </div>
+      </article>
+
+      <div class="pager">
+        <button class="nav-button" type="button" id="prev">Previous</button>
+        <span class="count" id="count">Page 1 of 3</span>
+        <button class="nav-button" type="button" id="next">Next</button>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll(".tab"));
+    const panels = Array.from(document.querySelectorAll(".panel"));
+    const count = document.querySelector("#count");
+    const prev = document.querySelector("#prev");
+    const next = document.querySelector("#next");
+    let active = 0;
+
+    function show(index) {
+      active = (index + panels.length) % panels.length;
+      panels.forEach((panel, i) => panel.classList.toggle("is-active", i === active));
+      tabs.forEach((tab, i) => tab.setAttribute("aria-selected", String(i === active)));
+      count.textContent = `Page ${active + 1} of ${panels.length}`;
+    }
+
+    tabs.forEach((tab, i) => tab.addEventListener("click", () => show(i)));
+    prev.addEventListener("click", () => show(active - 1));
+    next.addEventListener("click", () => show(active + 1));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") show(active - 1);
+      if (event.key === "ArrowRight") show(active + 1);
+    });
+  </script>
+</body>
+</html>
