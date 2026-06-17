@@ -48,8 +48,7 @@
       justify-content: center;
       align-items: center;
       padding: 22px 20px;
-      /* Change this line to make it a very faint grey */
-      border: 1px solid rgb(221 212 189 / 0.15); 
+      border: 1px solid var(--line);
       border-left: 8px solid var(--green);
       background: rgb(255 253 247 / 0.92);
       box-shadow: var(--shadow);
@@ -750,13 +749,13 @@
             </section>
 
             <section class="faq-item">
-              <h3>Can Yin's app members still use corporate or resident discounts?</h3>
-              <p>No. You may use either in-store discounts or app member benefits, but not both at the same time.<span class="zh">不可以，您只能选择店内折扣或 App 会员福利其中一种，不能同时享有两项优惠。</span></p>
+              <h3>Can members still use corporate or resident discounts?</h3>
+              <p>No. Customers may use either in-store discounts or app member benefits, but not both at the same time.<span class="zh">不可以。顾客只能选择店内折扣或 App 会员福利其中一种，不能同时享有两项优惠。</span></p>
             </section>
 
             <section class="faq-item">
               <h3>Who should customers contact for app issues?</h3>
-              <p>If you have app-related issues, please leave your registered phone number, email address, and name. Our team will check within 3-5 business days.<span class="zh">如您遇到 App 相关问题，请留下注册电话号码、电邮地址和姓名。总部将会在 3-5 个工作日内进行查询与处理。</span></p>
+              <p>If customers have app-related issues, please leave their registered phone number, email address, and name. Our HQ will check accordingly within 3-5 business days.<span class="zh">如顾客遇到 App 相关问题，请留下注册电话号码、电邮地址和姓名。总部将会在 3-5 个工作日内进行查询与处理。</span></p>
             </section>
 
             <section class="faq-item">
@@ -766,7 +765,8 @@
 
             <section class="faq-item">
               <h3>How long does my tier last?</h3>
-              <p>Membership level is based on a rolling 2-month window of Accumulated Points: the current month plus the previous month.<span class="zh">您的会员等级将根据滚动 2 个月内的 Accumulated Points 计算，即当前月份加上上一个月份。</span></p>
+              <p>Your membership tier is checked using a rolling 2-month window: the current month plus the previous month. Think of it like a moving basket. Every day, the app looks at the valid Accumulated Points in this basket to decide your tier.<span class="zh">您的会员等级会根据滚动 2 个月计算，即当前月份加上上一个月份。可以把它想成一个会移动的积分篮子：App 会查看这个篮子里的有效 Accumulated Points 来决定您的会员等级。</span></p>
+              <p>Each tier has its own required Accumulated Points level. If the points in your current 2-month basket stay within a tier's requirement, you remain in that tier. If the total drops below that tier's requirement, your tier may be adjusted based on the points that are still valid in the basket.<span class="zh">每个会员等级都有各自需要达到的 Accumulated Points。只要您当前 2 个月积分篮子里的积分仍符合该等级要求，您就会保留在该等级。如果总积分低于该等级要求，会员等级可能会根据篮子里仍然有效的积分进行调整。</span></p>
 
               <div class="rolling-demo" aria-label="Rolling 2-month membership level by date example">
                 <div class="rolling-header">
@@ -785,7 +785,7 @@
                   <div><b>Window starts</b><span id="rollingStart">May 1</span><span class="zh">计算从上个月的第 1 天开始。</span></div>
                   <div><b>Older points drop off</b><span id="rollingDrop">Before May 1</span><span class="zh">早于这个日期的积分不计算进会员等级。</span></div>
                 </div>
-                <p class="rolling-note" id="rollingNote">On Jun 17, membership level counts purchase-based Accumulated Points from May 1 to Jun 17. April and earlier do not count.<span class="zh">在 6 月 17 日，会员等级会计算 5 月 1 日至 6 月 17 日期间由消费获得的 Accumulated Points。4 月及更早日期不会计算。</span></p>
+                <p class="rolling-note" id="rollingNote">On Jun 17, your tier is checked using purchase-based Accumulated Points from May 1 to Jun 17. April and earlier do not count. If this total still meets your tier requirement, your tier continues.<span class="zh">在 6 月 17 日，系统会使用 5 月 1 日至 6 月 17 日期间由消费获得的 Accumulated Points 来检查您的会员等级。4 月及更早日期不会计算。如果这段期间的总积分仍符合该等级要求，您的等级就会继续保留。</span></p>
               </div>
             </section>
           </div>
@@ -859,7 +859,7 @@
       rollingDate.textContent = `Selected date: ${formatShortDate(selectedDate)}`;
       rollingStart.textContent = formatShortDate(windowStart);
       rollingDrop.textContent = dropText;
-      rollingNote.innerHTML = `On ${formatShortDate(selectedDate)}, membership level counts purchase-based Accumulated Points from ${formatShortDate(windowStart)} to ${formatShortDate(selectedDate)}. Points before ${formatShortDate(windowStart)} do not count.<span class="zh">在 ${formatChineseDate(selectedDate)}，会员等级会计算 ${formatChineseDate(windowStart)}至 ${formatChineseDate(selectedDate)}期间由消费获得的 Accumulated Points。早于 ${formatChineseDate(windowStart)}的积分不会计算。</span>`;
+      rollingNote.innerHTML = `On ${formatShortDate(selectedDate)}, your tier is checked using purchase-based Accumulated Points from ${formatShortDate(windowStart)} to ${formatShortDate(selectedDate)}. Points before ${formatShortDate(windowStart)} do not count. If this total still meets your tier requirement, your tier continues.<span class="zh">在 ${formatChineseDate(selectedDate)}，系统会使用 ${formatChineseDate(windowStart)}至 ${formatChineseDate(selectedDate)}期间由消费获得的 Accumulated Points 来检查您的会员等级。早于 ${formatChineseDate(windowStart)}的积分不会计算。如果这段期间的总积分仍符合该等级要求，您的等级就会继续保留。</span>`;
 
       monthChips.forEach((chip) => {
         const month = Number(chip.dataset.month);
