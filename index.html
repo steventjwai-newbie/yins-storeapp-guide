@@ -249,6 +249,17 @@
       line-height: 1.25;
     }
 
+    .rolling-date {
+      display: inline-block;
+      margin-top: 4px;
+      padding: 4px 7px;
+      border: 1px solid var(--line);
+      background: var(--cream);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
     .month-track {
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -309,6 +320,45 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.36;
+    }
+
+    .rolling-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .rolling-meta div {
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      background: var(--cream-2);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.3;
+    }
+
+    .rolling-meta b {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--green-dark);
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      .month-track,
+      .rolling-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .rolling-header {
+        display: block;
+      }
+
+      .rolling-result {
+        margin-top: 8px;
+        text-align: left;
+      }
     }
 
     .fact {
@@ -707,20 +757,24 @@
               <p>Points are the redeemable balance customers can spend on vouchers or rewards. They include points from purchases, daily check-ins, and rewards. Accumulated Points are used for membership tier progress and count only points earned from actual purchases.<span class="zh">Points 是可兑换余额，可用于兑换优惠券或奖励，来源包括消费、每日签到和奖励。Accumulated Points 则用于会员等级进度，只计算实际消费所获得的积分。</span></p>
               <p>Membership level is based on a rolling 2-month window of Accumulated Points: the current month plus the previous month.<span class="zh">会员等级将根据滚动 2 个月内的 Accumulated Points 计算，即当前月份加上上一个月份。</span></p>
 
-              <div class="rolling-demo" aria-label="Rolling 2-month membership level example">
+              <div class="rolling-demo" aria-label="Rolling 2-month membership level by date example">
                 <div class="rolling-header">
                   <strong>Rolling 2-month tier window<span class="zh">滚动 2 个月会员等级计算</span></strong>
-                  <div class="rolling-result" id="rollingResult">Counts: May + Jun</div>
+                  <div class="rolling-result" id="rollingResult">Counts: May 1 - Jun 17<span class="rolling-date" id="rollingDate">Selected date: Jun 17</span></div>
                 </div>
                 <div class="month-track" id="monthTrack">
-                  <div class="month-chip" data-month="Mar"><b>Mar</b><span>Older month</span></div>
-                  <div class="month-chip" data-month="Apr"><b>Apr</b><span>Previous window</span></div>
-                  <div class="month-chip" data-month="May"><b>May</b><span>Previous month</span></div>
-                  <div class="month-chip" data-month="Jun"><b>Jun</b><span>Current month</span></div>
-                  <div class="month-chip" data-month="Jul"><b>Jul</b><span>Next month</span></div>
+                  <div class="month-chip" data-month="2"><b>Mar</b><span>Older month</span></div>
+                  <div class="month-chip" data-month="3"><b>Apr</b><span>Older month</span></div>
+                  <div class="month-chip" data-month="4"><b>May</b><span>Previous month</span></div>
+                  <div class="month-chip" data-month="5"><b>Jun</b><span>Current month</span></div>
+                  <div class="month-chip" data-month="6"><b>Jul</b><span>Next month</span></div>
                 </div>
-                <input class="rolling-control" id="rollingSlider" type="range" min="1" max="3" value="2" aria-label="Move the current month">
-                <p class="rolling-note" id="rollingNote">If the current month is June, only May and June count toward the membership level. April and earlier do not count.<span class="zh">如果当前月份是 6 月，只有 5 月和 6 月会计算进会员等级。4 月及更早月份不会计算。</span></p>
+                <input class="rolling-control" id="rollingSlider" type="range" min="0" max="61" value="33" aria-label="Move the selected date">
+                <div class="rolling-meta">
+                  <div><b>Window starts</b><span id="rollingStart">May 1</span><span class="zh">计算从上个月的第 1 天开始。</span></div>
+                  <div><b>Older points drop off</b><span id="rollingDrop">Before May 1</span><span class="zh">早于这个日期的积分不计算进会员等级。</span></div>
+                </div>
+                <p class="rolling-note" id="rollingNote">On Jun 17, membership level counts purchase-based Accumulated Points from May 1 to Jun 17. April and earlier do not count.<span class="zh">在 6 月 17 日，会员等级会计算 5 月 1 日至 6 月 17 日期间由消费获得的 Accumulated Points。4 月及更早日期不会计算。</span></p>
               </div>
             </section>
           </div>
@@ -758,42 +812,59 @@
 
     const rollingSlider = document.querySelector("#rollingSlider");
     const rollingResult = document.querySelector("#rollingResult");
+    const rollingDate = document.querySelector("#rollingDate");
     const rollingNote = document.querySelector("#rollingNote");
+    const rollingStart = document.querySelector("#rollingStart");
+    const rollingDrop = document.querySelector("#rollingDrop");
     const monthChips = Array.from(document.querySelectorAll(".month-chip"));
-    const rollingExamples = [
-      {
-        current: "May",
-        previous: "Apr",
-        dropped: "Mar",
-        note: "If the current month is May, only April and May count toward the membership level. March and earlier do not count.",
-        zh: "如果当前月份是 5 月，只有 4 月和 5 月会计算进会员等级。3 月及更早月份不会计算。"
-      },
-      {
-        current: "Jun",
-        previous: "May",
-        dropped: "Apr",
-        note: "If the current month is June, only May and June count toward the membership level. April and earlier do not count.",
-        zh: "如果当前月份是 6 月，只有 5 月和 6 月会计算进会员等级。4 月及更早月份不会计算。"
-      },
-      {
-        current: "Jul",
-        previous: "Jun",
-        dropped: "May",
-        note: "If the current month is July, only June and July count toward the membership level. May and earlier do not count.",
-        zh: "如果当前月份是 7 月，只有 6 月和 7 月会计算进会员等级。5 月及更早月份不会计算。"
-      }
-    ];
+    const rollingStartDate = new Date(2026, 4, 15);
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const monthNamesZh = ["1 月", "2 月", "3 月", "4 月", "5 月", "6 月", "7 月", "8 月", "9 月", "10 月", "11 月", "12 月"];
+
+    function addDays(date, days) {
+      const nextDate = new Date(date);
+      nextDate.setDate(nextDate.getDate() + days);
+      return nextDate;
+    }
+
+    function formatShortDate(date) {
+      return `${monthNames[date.getMonth()]} ${date.getDate()}`;
+    }
+
+    function formatChineseDate(date) {
+      return `${monthNamesZh[date.getMonth()]} ${date.getDate()} 日`;
+    }
 
     function updateRollingDemo() {
-      if (!rollingSlider || !rollingResult || !rollingNote) return;
-      const example = rollingExamples[Number(rollingSlider.value) - 1];
-      rollingResult.textContent = `Counts: ${example.previous} + ${example.current}`;
-      rollingNote.innerHTML = `${example.note}<span class="zh">${example.zh}</span>`;
+      if (!rollingSlider || !rollingResult || !rollingNote || !rollingDate || !rollingStart || !rollingDrop) return;
+      const selectedDate = addDays(rollingStartDate, Number(rollingSlider.value));
+      const currentMonth = selectedDate.getMonth();
+      const previousMonth = currentMonth - 1;
+      const windowStart = new Date(selectedDate.getFullYear(), previousMonth, 1);
+      const droppedMonth = currentMonth - 2;
+      const dropText = `Before ${formatShortDate(windowStart)}`;
+
+      rollingResult.firstChild.textContent = `Counts: ${formatShortDate(windowStart)} - ${formatShortDate(selectedDate)}`;
+      rollingDate.textContent = `Selected date: ${formatShortDate(selectedDate)}`;
+      rollingStart.textContent = formatShortDate(windowStart);
+      rollingDrop.textContent = dropText;
+      rollingNote.innerHTML = `On ${formatShortDate(selectedDate)}, membership level counts purchase-based Accumulated Points from ${formatShortDate(windowStart)} to ${formatShortDate(selectedDate)}. Points before ${formatShortDate(windowStart)} do not count.<span class="zh">在 ${formatChineseDate(selectedDate)}，会员等级会计算 ${formatChineseDate(windowStart)}至 ${formatChineseDate(selectedDate)}期间由消费获得的 Accumulated Points。早于 ${formatChineseDate(windowStart)}的积分不会计算。</span>`;
+
       monthChips.forEach((chip) => {
-        const month = chip.dataset.month;
-        chip.classList.toggle("is-current", month === example.current);
-        chip.classList.toggle("is-counted", month === example.previous || month === example.current);
-        chip.classList.toggle("is-dropped", month === example.dropped);
+        const month = Number(chip.dataset.month);
+        const label = chip.querySelector("span");
+        const isCurrent = month === currentMonth;
+        const isPrevious = month === previousMonth;
+        const isDropped = month === droppedMonth;
+        chip.classList.toggle("is-current", isCurrent);
+        chip.classList.toggle("is-counted", isPrevious || isCurrent);
+        chip.classList.toggle("is-dropped", isDropped);
+        if (label) {
+          if (isCurrent) label.textContent = "Current month";
+          else if (isPrevious) label.textContent = "Previous month";
+          else if (isDropped) label.textContent = "Dropped off";
+          else label.textContent = "Not counted";
+        }
       });
     }
 
