@@ -219,6 +219,98 @@
       line-height: 1.42;
     }
 
+    .rolling-demo {
+      margin-top: 14px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .rolling-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .rolling-header strong {
+      display: block;
+      color: var(--green-dark);
+      font-size: 15px;
+      line-height: 1.2;
+    }
+
+    .rolling-result {
+      color: var(--green-dark);
+      font-size: 13px;
+      font-weight: 800;
+      text-align: right;
+      line-height: 1.25;
+    }
+
+    .month-track {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    .month-chip {
+      display: grid;
+      gap: 4px;
+      min-height: 74px;
+      padding: 9px 8px;
+      border: 1px solid var(--line);
+      background: var(--cream-2);
+      color: var(--muted);
+      text-align: center;
+      align-content: center;
+    }
+
+    .month-chip b {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .month-chip span {
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .month-chip.is-counted {
+      border-color: var(--green);
+      background: rgb(49 91 47 / 0.12);
+    }
+
+    .month-chip.is-current {
+      background: var(--green);
+      color: var(--white);
+      border-color: var(--green);
+    }
+
+    .month-chip.is-current b,
+    .month-chip.is-current span {
+      color: var(--white);
+    }
+
+    .month-chip.is-dropped {
+      opacity: 0.55;
+      text-decoration: line-through;
+    }
+
+    .rolling-control {
+      width: 100%;
+      accent-color: var(--green);
+    }
+
+    .rolling-note {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.36;
+    }
+
     .fact {
       padding: 13px 14px;
       border-left: 5px solid var(--green);
@@ -613,6 +705,23 @@
             <section class="faq-item">
               <h3>What is the difference between Points and Accumulated Points?</h3>
               <p>Points are the redeemable balance customers can spend on vouchers or rewards. They include points from purchases, daily check-ins, and rewards. Accumulated Points are used for membership tier progress and count only points earned from actual purchases.<span class="zh">Points 是可兑换余额，可用于兑换优惠券或奖励，来源包括消费、每日签到和奖励。Accumulated Points 则用于会员等级进度，只计算实际消费所获得的积分。</span></p>
+              <p>Membership level is based on a rolling 2-month window of Accumulated Points: the current month plus the previous month.<span class="zh">会员等级将根据滚动 2 个月内的 Accumulated Points 计算，即当前月份加上上一个月份。</span></p>
+
+              <div class="rolling-demo" aria-label="Rolling 2-month membership level example">
+                <div class="rolling-header">
+                  <strong>Rolling 2-month tier window<span class="zh">滚动 2 个月会员等级计算</span></strong>
+                  <div class="rolling-result" id="rollingResult">Counts: May + Jun</div>
+                </div>
+                <div class="month-track" id="monthTrack">
+                  <div class="month-chip" data-month="Mar"><b>Mar</b><span>Older month</span></div>
+                  <div class="month-chip" data-month="Apr"><b>Apr</b><span>Previous window</span></div>
+                  <div class="month-chip" data-month="May"><b>May</b><span>Previous month</span></div>
+                  <div class="month-chip" data-month="Jun"><b>Jun</b><span>Current month</span></div>
+                  <div class="month-chip" data-month="Jul"><b>Jul</b><span>Next month</span></div>
+                </div>
+                <input class="rolling-control" id="rollingSlider" type="range" min="1" max="3" value="2" aria-label="Move the current month">
+                <p class="rolling-note" id="rollingNote">If the current month is June, only May and June count toward the membership level. April and earlier do not count.<span class="zh">如果当前月份是 6 月，只有 5 月和 6 月会计算进会员等级。4 月及更早月份不会计算。</span></p>
+              </div>
             </section>
           </div>
 
@@ -646,6 +755,52 @@
     tabs.forEach((tab, i) => tab.addEventListener("click", () => show(i)));
     prev.addEventListener("click", () => show(active - 1));
     next.addEventListener("click", () => show(active + 1));
+
+    const rollingSlider = document.querySelector("#rollingSlider");
+    const rollingResult = document.querySelector("#rollingResult");
+    const rollingNote = document.querySelector("#rollingNote");
+    const monthChips = Array.from(document.querySelectorAll(".month-chip"));
+    const rollingExamples = [
+      {
+        current: "May",
+        previous: "Apr",
+        dropped: "Mar",
+        note: "If the current month is May, only April and May count toward the membership level. March and earlier do not count.",
+        zh: "如果当前月份是 5 月，只有 4 月和 5 月会计算进会员等级。3 月及更早月份不会计算。"
+      },
+      {
+        current: "Jun",
+        previous: "May",
+        dropped: "Apr",
+        note: "If the current month is June, only May and June count toward the membership level. April and earlier do not count.",
+        zh: "如果当前月份是 6 月，只有 5 月和 6 月会计算进会员等级。4 月及更早月份不会计算。"
+      },
+      {
+        current: "Jul",
+        previous: "Jun",
+        dropped: "May",
+        note: "If the current month is July, only June and July count toward the membership level. May and earlier do not count.",
+        zh: "如果当前月份是 7 月，只有 6 月和 7 月会计算进会员等级。5 月及更早月份不会计算。"
+      }
+    ];
+
+    function updateRollingDemo() {
+      if (!rollingSlider || !rollingResult || !rollingNote) return;
+      const example = rollingExamples[Number(rollingSlider.value) - 1];
+      rollingResult.textContent = `Counts: ${example.previous} + ${example.current}`;
+      rollingNote.innerHTML = `${example.note}<span class="zh">${example.zh}</span>`;
+      monthChips.forEach((chip) => {
+        const month = chip.dataset.month;
+        chip.classList.toggle("is-current", month === example.current);
+        chip.classList.toggle("is-counted", month === example.previous || month === example.current);
+        chip.classList.toggle("is-dropped", month === example.dropped);
+      });
+    }
+
+    if (rollingSlider) {
+      rollingSlider.addEventListener("input", updateRollingDemo);
+      updateRollingDemo();
+    }
 
     document.addEventListener("keydown", (event) => {
       if (event.key === "ArrowLeft") show(active - 1);
