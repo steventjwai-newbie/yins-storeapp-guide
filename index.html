@@ -680,12 +680,68 @@
           <p class="disclaimer">We reserve the right to change the app content and offerings without prior notice.<span class="zh">我们保留在不另行通知的情况下更改 App 内容与优惠的权利。</span></p>
         </div>
 
-        <div class="image-board feature-image current-benefits">
-          <figure class="shot"><img src="assets/current-points.png" alt="Member benefits points screen"><figcaption>Earn Points With Purchases</figcaption></figure>
-          <figure class="shot"><img src="assets/daily-check-in.png" alt="Daily check-in rewards screen"><figcaption>Daily Check-in</figcaption></figure>
-          <figure class="shot redeem-wide"><img src="assets/redeem-rewards.png" alt="Redeem rewards screen"><figcaption>Redeem Rewards</figcaption></figure>
-        </div>
-      </article>
+      <style>
+        /* Add this to your CSS or <style> block */
+        .image-board {
+          display: flex;
+          flex-wrap: wrap;
+          align-items: center; /* Vertically center the arrows with images */
+          justify-content: center;
+          gap: 10px; /* Space for the arrow container */
+        }
+      
+        .image-board .arrow {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 40px;
+          height: 40px;
+          flex-shrink: 0; /* Prevents arrow from squishing */
+        }
+      
+        .image-board .arrow svg {
+          width: 32px;
+          height: 32px;
+          /* Corporate color (adjust variable name if different) */
+          fill: var(--green, #2ecc71); 
+          /* Shadow effect */
+          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+      </style>
+      
+      <div class="image-board feature-image current-benefits">
+        <!-- Image 1 -->
+        <figure class="shot">
+          <img src="assets/current-points.png" alt="Member benefits points screen">
+          <figcaption>Earn Points With Purchases</figcaption>
+        </figure>
+      
+        <!-- Arrow 1 -->
+        <span class="arrow">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
+          </svg>
+        </span>
+      
+        <!-- Image 2 -->
+        <figure class="shot">
+          <img src="assets/daily-check-in.png" alt="Daily check-in rewards screen">
+          <figcaption>Daily Check-in</figcaption>
+        </figure>
+      
+        <!-- Arrow 2 -->
+        <span class="arrow">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
+          </svg>
+        </span>
+      
+        <!-- Image 3 -->
+        <figure class="shot redeem-wide">
+          <img src="assets/redeem-rewards.png" alt="Redeem rewards screen">
+          <figcaption>Redeem Rewards</figcaption>
+        </figure>
+      </div>
 
       <article class="panel" id="method">
         <div class="method-copy">
