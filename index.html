@@ -438,9 +438,9 @@
 
     .workflow {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 16px;
-      align-items: stretch;
+      grid-template-columns: minmax(0, 1fr) 44px minmax(0, 1fr) 44px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
       margin-top: 24px;
     }
 
@@ -453,20 +453,6 @@
       background: var(--white);
       overflow: hidden;
       box-shadow: 0 18px 40px rgb(49 91 47 / 0.1);
-    }
-
-    .flow-card::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      right: -23px;
-      width: 42px;
-      height: 2px;
-      background: var(--gold);
-    }
-
-    .flow-card:last-child::after {
-      display: none;
     }
 
     .flow-title {
@@ -486,6 +472,22 @@
       height: 30px;
       background: var(--green);
       color: var(--white);
+    }
+
+    .flow-arrow {
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      color: var(--green);
+      font-size: 34px;
+      font-weight: 900;
+      line-height: 1;
+      text-shadow: 0 2px 4px rgb(0 0 0 / 0.22);
+    }
+
+    .flow-arrow span {
+      transform: translateY(-1px);
     }
 
     .flow-card img {
@@ -628,8 +630,14 @@
         grid-template-columns: 1fr;
       }
 
-      .flow-card::after {
-        display: none;
+      .flow-arrow {
+        width: 100%;
+        height: 34px;
+        font-size: 30px;
+      }
+
+      .flow-arrow span {
+        transform: rotate(90deg);
       }
 
       .shot,
@@ -680,68 +688,12 @@
           <p class="disclaimer">We reserve the right to change the app content and offerings without prior notice.<span class="zh">我们保留在不另行通知的情况下更改 App 内容与优惠的权利。</span></p>
         </div>
 
-      <style>
-        /* Add this to your CSS or <style> block */
-        .image-board {
-          display: flex;
-          flex-wrap: wrap;
-          align-items: center; /* Vertically center the arrows with images */
-          justify-content: center;
-          gap: 10px; /* Space for the arrow container */
-        }
-      
-        .image-board .arrow {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          width: 40px;
-          height: 40px;
-          flex-shrink: 0; /* Prevents arrow from squishing */
-        }
-      
-        .image-board .arrow svg {
-          width: 32px;
-          height: 32px;
-          /* Corporate color (adjust variable name if different) */
-          fill: var(--green, #2ecc71); 
-          /* Shadow effect */
-          filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-        }
-      </style>
-      
-      <div class="image-board feature-image current-benefits">
-        <!-- Image 1 -->
-        <figure class="shot">
-          <img src="assets/current-points.png" alt="Member benefits points screen">
-          <figcaption>Earn Points With Purchases</figcaption>
-        </figure>
-      
-        <!-- Arrow 1 -->
-        <span class="arrow">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
-          </svg>
-        </span>
-      
-        <!-- Image 2 -->
-        <figure class="shot">
-          <img src="assets/daily-check-in.png" alt="Daily check-in rewards screen">
-          <figcaption>Daily Check-in</figcaption>
-        </figure>
-      
-        <!-- Arrow 2 -->
-        <span class="arrow">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M5 12h14M13 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
-          </svg>
-        </span>
-      
-        <!-- Image 3 -->
-        <figure class="shot redeem-wide">
-          <img src="assets/redeem-rewards.png" alt="Redeem rewards screen">
-          <figcaption>Redeem Rewards</figcaption>
-        </figure>
-      </div>
+        <div class="image-board feature-image current-benefits">
+          <figure class="shot"><img src="assets/current-points.png" alt="Member benefits points screen"><figcaption>Earn Points With Purchases</figcaption></figure>
+          <figure class="shot"><img src="assets/daily-check-in.png" alt="Daily check-in rewards screen"><figcaption>Daily Check-in</figcaption></figure>
+          <figure class="shot redeem-wide"><img src="assets/redeem-rewards.png" alt="Redeem rewards screen"><figcaption>Redeem Rewards</figcaption></figure>
+        </div>
+      </article>
 
       <article class="panel" id="method">
         <div class="method-copy">
@@ -757,11 +709,13 @@
             <img src="assets/method-start.png" alt="Opening screen with Create Account button">
             <p class="flow-copy">Start from the opening screen and tap Create Account.<span class="zh">从首页开始，点击 Create Account（创建账号）。</span></p>
           </figure>
+          <div class="flow-arrow" aria-hidden="true"><span>→</span></div>
           <figure class="flow-card">
             <figcaption class="flow-title"><span>2</span>Fill In</figcaption>
             <img src="assets/method-form.png" alt="Create account form screen">
             <p class="flow-copy">Enter your name, email, contact number, and password.<span class="zh">填写姓名、电邮、联络号码和密码。</span></p>
           </figure>
+          <div class="flow-arrow" aria-hidden="true"><span>→</span></div>
           <figure class="flow-card">
             <figcaption class="flow-title"><span>3</span>Sign Up</figcaption>
             <img src="assets/method-form.png" alt="Create account form with Sign Up button">
