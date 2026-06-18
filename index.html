@@ -164,6 +164,11 @@
       gap: 16px;
     }
 
+    #use.panel {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
     #faq.panel {
       grid-template-columns: 1fr;
       gap: 18px;
@@ -522,12 +527,18 @@
     }
 
     .image-board.current-benefits .shot {
-      height: 490px;
+      height: 260px;
     }
 
     .image-board.current-benefits .shot.redeem-wide {
-      grid-column: 1 / -1;
-      height: 360px;
+      grid-column: auto;
+      height: 320px;
+    }
+
+    .shot.frameless {
+      border: 0;
+      background: transparent;
+      overflow: visible;
     }
 
     .shot {
@@ -561,6 +572,43 @@
       color: var(--green-dark);
       font-size: 12px;
       font-weight: 800;
+      border: 1px solid var(--line);
+    }
+
+    .use-flow {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 38px minmax(0, 1fr) 38px minmax(0, 1fr) 38px minmax(0, 1fr);
+      gap: 10px;
+      align-items: center;
+      margin-top: 8px;
+    }
+
+    .use-step {
+      position: relative;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      min-height: 470px;
+      margin: 0;
+      background: transparent;
+    }
+
+    .use-step img {
+      width: 100%;
+      height: 430px;
+      display: block;
+      object-fit: contain;
+      object-position: center top;
+      background: transparent;
+    }
+
+    .use-step figcaption {
+      margin-top: 8px;
+      padding: 7px 9px;
+      background: rgb(255 253 247 / 0.9);
+      color: var(--green-dark);
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
       border: 1px solid var(--line);
     }
 
@@ -626,7 +674,8 @@
       }
 
       .image-board.feature-image,
-      .workflow {
+      .workflow,
+      .use-flow {
         grid-template-columns: 1fr;
       }
 
@@ -638,6 +687,14 @@
 
       .flow-arrow span {
         transform: rotate(90deg);
+      }
+
+      .use-step {
+        min-height: auto;
+      }
+
+      .use-step img {
+        height: 360px;
       }
 
       .shot,
@@ -670,7 +727,7 @@
     <nav class="controls" aria-label="Poster pages">
       <button class="tab" type="button" aria-selected="true" data-target="benefits">1. Benefits<span>Member tiers, points, vouchers, rewards</span></button>
       <button class="tab" type="button" aria-selected="false" data-target="method">2. Method<span>Create account, fill in, sign up</span></button>
-      <button class="tab" type="button" aria-selected="false" data-target="use">3. How to use<span>Dine in, delivery, reservation, QR order</span></button>
+      <button class="tab" type="button" aria-selected="false" data-target="use">3. How to use<span>Home, menu, checkout, payment</span></button>
       <button class="tab" type="button" aria-selected="false" data-target="faq">4. FAQ<span>Points, discounts, app support</span></button>
     </nav>
 
@@ -679,10 +736,10 @@
         <div>
           <p class="kicker">Page 1</p>
           <h2>Benefits of registering as a Yin's member</h2>
-          <p class="lead">Registering as a Yin's member gives customers active points, daily check-in, and redeem rewards benefits now, with more rewards features planned for later.<span class="zh">注册成为 Yin's 会员后，顾客目前可享有积分、每日签到和兑换奖励福利，未来也将陆续推出更多奖励功能。</span></p>
+          <p class="lead">Registering as a Yin's member gives you active points, daily check-in, redeem rewards, and digital voucher benefits now. Mission is currently unavailable.<span class="zh">注册成为 Yin's 会员后，您目前可享有积分、每日签到、兑换奖励和电子优惠券福利。任务功能目前暂未开放。</span></p>
 
           <div class="facts">
-            <div class="fact"><strong>Benefits of Registering</strong><p>Earn points with purchases.<span class="zh">消费即可赚取积分。</span></p><p>Daily check-in.<span class="zh">每日签到。</span></p><p>Redeem rewards.<span class="zh">兑换奖励。</span></p><p>Digital vouchers.<span class="zh">电子优惠券。</span></p></div>
+            <div class="fact"><strong>Benefits of Registering</strong><p>Earn points with purchases.<span class="zh">消费即可赚取积分。</span></p><p>Daily check-in.<span class="zh">每日签到。</span></p><p>Redeem rewards and receive digital vouchers.<span class="zh">兑换奖励并获得电子优惠券。</span></p><p>After you redeem an item on the Redeem page, a voucher will be created for you to use within 1 week from claiming it.<span class="zh">当您在 Redeem 页面兑换商品后，系统会生成一张优惠券，您需要在领取后的 1 周内使用。</span></p></div>
             <div class="fact"><strong>Future Benefits</strong><p>Mission.<span class="zh">任务奖励。</span></p></div>
           </div>
           <p class="disclaimer">We reserve the right to change the app content and offerings without prior notice.<span class="zh">我们保留在不另行通知的情况下更改 App 内容与优惠的权利。</span></p>
@@ -691,7 +748,8 @@
         <div class="image-board feature-image current-benefits">
           <figure class="shot"><img src="assets/current-points.png" alt="Member benefits points screen"><figcaption>Earn Points With Purchases</figcaption></figure>
           <figure class="shot"><img src="assets/daily-check-in.png" alt="Daily check-in rewards screen"><figcaption>Daily Check-in</figcaption></figure>
-          <figure class="shot redeem-wide"><img src="assets/redeem-rewards.png" alt="Redeem rewards screen"><figcaption>Redeem Rewards</figcaption></figure>
+          <figure class="shot redeem-wide frameless"><img src="assets/redeem-rewards.png" alt="Redeem rewards screen"><figcaption>Redeem Rewards</figcaption></figure>
+          <figure class="shot redeem-wide frameless"><img src="assets/digital-vouchers.png" alt="Digital vouchers screen"><figcaption>Digital Vouchers</figcaption></figure>
         </div>
       </article>
 
@@ -728,21 +786,26 @@
         <div>
           <p class="kicker">Page 3</p>
           <h2>How to use the app</h2>
-          <p class="lead">From the home screen, users choose Dine in, Reservation, Pick Up, or Delivery.<span class="zh">用户可在主页选择堂食、预约、到店自取或外送服务。</span></p>
+          <p class="lead">For app ordering, start from the home page, choose items from the menu, confirm checkout, then complete payment.<span class="zh">使用 App 下单时，请从主页开始，选择菜单商品，确认结账，然后完成付款。</span></p>
 
           <div class="facts">
             <div class="fact"><strong>Dine in</strong><p>Select a store, browse the menu, add items, then choose table number and payment method.<span class="zh">选择门店，浏览菜单并加入商品，然后选择桌号和付款方式。</span></p></div>
             <div class="fact"><strong>Delivery</strong><p>Enter delivery location, confirm items, choose delivery time, and complete address details.<span class="zh">输入外送地点，确认商品，选择送达时间，并填写完整地址。</span></p></div>
             <div class="fact"><strong>Reservation</strong><p>Select store, guest count, booking date and time, and add remarks if needed.<span class="zh">选择门店、人数、预约日期和时间，如有需要可填写备注。</span></p></div>
             <div class="fact"><strong>Table QR</strong><p>Scan the table QR to link the order to the restaurant location and table number.<span class="zh">扫描桌号二维码，即可将订单连接到对应的餐厅地点和桌号。</span></p></div>
+            <div class="fact"><strong>Payment note</strong><p>After bank or DuitNow approval, you must return to Yin's app to complete the transaction.<span class="zh">完成银行或 DuitNow 授权后，您必须回到 Yin's App 才能完成交易流程。</span></p></div>
           </div>
           <p class="disclaimer">We reserve the right to change the app content and offerings without prior notice.<span class="zh">我们保留在不另行通知的情况下更改 App 内容与优惠的权利。</span></p>
         </div>
 
-        <div class="image-board">
-          <figure class="shot tall"><img src="assets/home-screen-crop.jpg" alt="Home app screen"><figcaption>Home Page</figcaption></figure>
-          <figure class="shot"><img src="assets/menu-screen-crop.jpg" alt="Menu app screen"><figcaption>Menu</figcaption></figure>
-          <figure class="shot"><img src="assets/checkout-crop.jpg" alt="Checkout app screen"><figcaption>Checkout</figcaption></figure>
+        <div class="use-flow" aria-label="App ordering workflow">
+          <figure class="use-step"><img src="assets/home-screen-crop.jpg" alt="Home app screen"><figcaption>Home Page</figcaption></figure>
+          <div class="flow-arrow" aria-hidden="true"><span>→</span></div>
+          <figure class="use-step"><img src="assets/menu-screen-crop.jpg" alt="Menu app screen"><figcaption>Menu</figcaption></figure>
+          <div class="flow-arrow" aria-hidden="true"><span>→</span></div>
+          <figure class="use-step"><img src="assets/checkout-crop.jpg" alt="Checkout app screen"><figcaption>Checkout</figcaption></figure>
+          <div class="flow-arrow" aria-hidden="true"><span>→</span></div>
+          <figure class="use-step"><img src="assets/payment-screen.png" alt="Payment app screen"><figcaption>Payment</figcaption></figure>
         </div>
       </article>
 
