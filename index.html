@@ -98,7 +98,7 @@
 
     .controls {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 10px;
       margin: 18px 0;
     }
@@ -172,6 +172,57 @@
     #faq.panel {
       grid-template-columns: 1fr;
       gap: 18px;
+    }
+
+    #queens.panel {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .outlet-options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .outlet-options .fact {
+      padding: 20px;
+    }
+
+    .outlet-options .fact strong {
+      font-size: 20px;
+    }
+
+    .outlet-options .fact p + p {
+      margin-top: 12px;
+    }
+
+    .infographic-link {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 12px 16px;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .infographic-link:hover,
+    .infographic-link:focus-visible {
+      background: var(--green-dark);
+    }
+
+    .infographic-link.secondary {
+      margin-left: 8px;
+      border: 1px solid var(--green);
+      background: transparent;
+      color: var(--green-dark);
+    }
+
+    .infographic-link.secondary:hover,
+    .infographic-link.secondary:focus-visible {
+      background: var(--cream);
     }
 
     @keyframes rise {
@@ -663,6 +714,10 @@
         grid-template-columns: 1fr;
       }
 
+      .outlet-options {
+        grid-template-columns: 1fr;
+      }
+
       .panel {
         min-height: auto;
         padding: 18px;
@@ -728,6 +783,7 @@
       <button class="tab" type="button" aria-selected="false" data-target="method">2. Method<span>Create account, fill in, sign up</span></button>
       <button class="tab" type="button" aria-selected="false" data-target="use">3. How to use<span>Home, menu, checkout, payment</span></button>
       <button class="tab" type="button" aria-selected="false" data-target="faq">4. FAQ<span>Points, discounts, app support</span></button>
+      <button class="tab" type="button" aria-selected="false" data-target="queens">5. Queens Waterfront<span>Dine-in offer and app points</span></button>
     </nav>
 
     <section class="stage" aria-live="polite">
@@ -866,9 +922,35 @@
         </div>
       </article>
 
+      <article class="panel" id="queens">
+        <div>
+          <p class="kicker">Page 5</p>
+          <h2>Queens Waterfront member offer</h2>
+          <p class="lead">This offer applies only at Yin's Queens Waterfront outlet. Choose the benefit that fits how you order and pay.<span class="zh">此优惠仅适用于 Yin's Queens Waterfront 门店。请根据您的下单及付款方式选择合适的会员福利。</span></p>
+
+          <div class="outlet-options">
+            <div class="fact">
+              <strong>Dine in and pay in store</strong>
+              <p>After at least one full-price purchase, enjoy a 10% discount through a service charge waiver when you pay in store for dine-in items.<span class="zh">至少先以原价消费一次后，堂食并到店付款可享免除 10% 服务费的优惠。</span></p>
+            </div>
+            <div class="fact">
+              <strong>Order and pay through the app</strong>
+              <p>Earn points on eligible purchases made through the app. The in-store discount and app member benefits cannot be combined for the same order.<span class="zh">通过 App 下单及付款，符合条件的消费可赚取积分。同一笔订单不能同时享有店内折扣与 App 会员福利。</span></p>
+            </div>
+          </div>
+
+          <div class="facts">
+            <div class="fact"><strong>Takeaway</strong><p>You may order and pay in store or through the app for takeaway.<span class="zh">外带可选择到店下单付款，或通过 App 下单付款。</span></p></div>
+          </div>
+          <a class="infographic-link" href="infographic.html">View quick infographic · 查看会员速览图</a>
+          <a class="infographic-link secondary" href="infographic.png" download="yins-member-app-quick-guide.png">Download image · 下载图片</a>
+          <p class="disclaimer">We reserve the right to change the app content and offerings without prior notice.<span class="zh">我们保留在不另行通知的情况下更改 App 内容与优惠的权利。</span></p>
+        </div>
+      </article>
+
       <div class="pager">
         <button class="nav-button" type="button" id="prev">Previous</button>
-        <span class="count" id="count">Page 1 of 4</span>
+        <span class="count" id="count">Page 1 of 5</span>
         <button class="nav-button" type="button" id="next">Next</button>
       </div>
     </section>
